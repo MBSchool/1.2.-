@@ -20,7 +20,6 @@ spot_speed = 10000
 
 font_setup = ("Arial", 20, "normal")
 score = 0
-score_writer = trtl.Turtle()
 
 #-----initialize turtle-----
 
@@ -35,9 +34,9 @@ score_writer.penup()
 score_writer.hideturtle()
 score_writer.goto(0, 400)
 
-timer = 30
+timer = 5
 counter_interval = 1000   #1000 represents 1 second
-timer_up = False
+timer_up = "false"
 
 counter.hideturtle()
 counter.penup()
@@ -47,17 +46,11 @@ counter.goto(-300, 400)
 #-----game functions--------
 
 def change_pos():
-    ranxpos = rand.randint(-300, 400 )
+    ranxpos = rand.randint(-300, 400)
     ranypos = rand.randint(-300, 400)
     s.goto(ranxpos, ranypos)
 
-def spot_clicked(x,y):
-    change_pos()
-    print("The new pos is",x,y)
-    update_score()
-    score_writer.goto(0, 400)
 
-    
 def update_score():
     global score
     score = score + 1
@@ -65,13 +58,21 @@ def update_score():
     score_writer.clear()
     score_writer.write(score, font=font_setup)
 
+def spot_clicked(x,y):
+    global timer_up, timer
+    change_pos()
+    update_score()
+    score_writer.goto(0, 400)
+    if timer_up == "true":
+      s.hideturtle()
+
 def countdown():
   global timer, timer_up
   counter.clear()
   counter.hideturtle()
   if timer <= 0:
     counter.write("Time's Up", font=font_setup)
-    timer_up = True
+    timer_up = "true"
   else:
     counter.write("Timer: " + str(timer), font=font_setup)
     timer -= 1
