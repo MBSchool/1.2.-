@@ -3,7 +3,7 @@
 
 import turtle as trtl
 import random as rand
-import leaderboard as lb
+import leaderboard1 as lb
 #-----Adding Turtles-----
 
 wn = trtl.Screen()
