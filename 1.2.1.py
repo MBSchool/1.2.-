@@ -107,6 +107,6 @@ def manage_leaderboard():
 
 s.onclick(spot_clicked)
 countdown()
-
+print("test")
 
 wn.mainloop()
