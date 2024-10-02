@@ -1,0 +1,4 @@
+czzxc,50
+h,8
+cool,5
+sigma,10
