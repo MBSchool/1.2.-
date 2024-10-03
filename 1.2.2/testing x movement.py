@@ -30,20 +30,24 @@ def draw_apple(active_apple):
     wn.update()
 
 def move_apple():
-    apple.goto(0, -150)
-    print("Apple moved to:", apple.ycor())
+    apple.goto(apple.xcor(), -150)
+    print("Apple moved to:", apple.pos())
     reset_apple()
 
 def draw_random():
     global current_letter
     drawer.clear()
     drawer.color("Black")
-    drawer.goto(-100, 200)
+    drawer.goto(-20, 200)
     drawer.write(f"Press: {current_letter}", font=("Arial", 45, "bold"))
 
 def reset_apple():
     apple.hideturtle()
-    apple.goto(0, 0)
+    
+    # Randomize X position by multiples of 50
+    random_x = rand.randint(-7, 7) * 50  # Generates multiples of 50 between -350 and 350
+    apple.goto(random_x, 0)
+    
     apple.showturtle()
     set_new_letter()
 
@@ -57,9 +61,9 @@ def set_new_letter():
         wn.onkeypress(move_apple, current_letter)
     else:
         drawer.clear()
-        drawer.write("You win!", font=("Arial", 45, "bold"))
+        drawer.write("Game Over", font=("Arial", 45, "bold"))
 
-# --- Events --- #
+# --- Initial calls --- #
 
 draw_apple(apple)
 draw_random()

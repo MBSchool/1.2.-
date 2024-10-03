@@ -6,16 +6,18 @@ wn.setup(width=1.0, height=1.0)
 #-----setup-----
 
 # --- Setting up apple --- #
+
 apple = trtl.Turtle()
 apple_image = "apple.gif" # Store the file name of your shape
 wn.addshape(apple_image)
 apple.penup()
-apple.setheading(270)
 
 # --- Setting Up list --- #
 
-letter_list = ["a","s","d","f","g","h","j","k","l"]
+letter_list = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l']
 letter_list_used = []
+randletter = rand.choice(letter_list)
+currentletter = ""
 
 # --- Setting up drawer --- #
 
@@ -29,7 +31,6 @@ wn.bgpic("background.gif")
 
 #-----functions-----
 
-# given a turtle, set that turtle to be shaped by the image file
 def draw_apple(active_apple):
   active_apple.shape(apple_image)
   wn.update()
@@ -40,10 +41,11 @@ def move_apple():
  reset_apple()
  
 
-def draw_A():
+def draw_random():
+  global randletter
   drawer.color("Black")
   drawer.goto(-20,200)
-  drawer.write("A", font=("Arial", 45, "bold")) 
+  drawer.write(f"Press :", {randletter}, font=("Arial", 45, "bold")) 
 
 
 def reset_apple():
@@ -51,12 +53,20 @@ def reset_apple():
   apple.goto(0,0)
   apple.showturtle()
   drawer.clear()
+  draw_random()
+  used_letter_setter()
+
+def used_letter_setter():
+  global randletter
+  letter_list_used.append(randletter)
+  letter_list.pop(randletter)
 
 #-----function calls-----
   
 draw_apple(apple)
-draw_A()
-wn.onkeypress(move_apple, "a")
+draw_random()
+print(randletter)
+wn.onkeypress(move_apple, randletter)
 apple.showturtle()
 wn.listen()
 wn.mainloop()
