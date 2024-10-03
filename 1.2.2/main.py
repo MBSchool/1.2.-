@@ -3,15 +3,22 @@ import turtle as trtl
 wn = trtl.Screen()
 wn.setup(width=1.0, height=1.0)
 #-----setup-----
+
+# --- Setting up apple --- #
 apple = trtl.Turtle()
 apple_image = "apple.gif" # Store the file name of your shape
-
 wn.addshape(apple_image)
-
-wn.bgpic("background.gif")
-
 apple.penup()
 apple.setheading(270)
+
+# --- Setting up drawer --- #
+
+drawer = trtl.Turtle()
+drawer.hideturtle()
+drawer.penup()
+
+# --- Bgpic -- #
+wn.bgpic("background.gif")
 
 #-----functions-----
 
@@ -21,8 +28,18 @@ def draw_apple(active_apple):
   wn.update()
 
 def move_apple():
+ draw_A()
  apple.goto(0,-150)
+ drawer.goto(0.-150)
  print("Apple moved to:", apple.ycor())
+ 
+
+def draw_A():
+  drawer.color("white")
+  drawer.goto(-19,-40)
+  drawer.write("A", font=("Arial", 45, "bold")) 
+
+
 
 
 #-----function calls-----
