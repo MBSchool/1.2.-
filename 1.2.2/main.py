@@ -5,7 +5,6 @@ wn.setup(width=1.0, height=1.0)
 #-----setup-----
 apple = trtl.Turtle()
 apple_image = "apple.gif" # Store the file name of your shape
-apple_pressed = "false"
 
 wn.addshape(apple_image)
 
@@ -21,21 +20,14 @@ def draw_apple(active_apple):
   active_apple.shape(apple_image)
   wn.update()
 
-def apple_called():
-  global apple_pressed
-  apple_pressed = "true"
-  print("Apple called")
-  move_apple()
-
 def move_apple():
- apple.forward(1)
+ apple.goto(0,-150)
+ print("Apple moved to:", apple.ycor())
 
 
 #-----function calls-----
 draw_apple(apple)
-
 wn.onkeypress(move_apple, "a")
-
 wn.listen()
 wn.mainloop()
 
