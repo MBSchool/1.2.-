@@ -37,7 +37,6 @@ def move_apple():
     reset_apple()
 
 def draw_random():
-    """Displays the next letter to press on the screen."""
     global current_letter
     drawer.clear()
     drawer.color("black")
@@ -45,7 +44,6 @@ def draw_random():
     drawer.write(f"Press: {current_letter}", font=("Arial", 45, "bold"))
 
 def reset_apple():
-    """Resets the apple's position and prepares for the next letter."""
     apple.hideturtle()
     randx = rand.randint(-200, 200)  # Adjusted to cover more screen space
     apple.goto(randx, 0)  # Reset apple to new random position at the top
@@ -53,7 +51,6 @@ def reset_apple():
     set_new_letter()
 
 def set_new_letter():
-    """Updates the current letter and binds the corresponding key."""
     global current_letter
     letter_list_used.append(current_letter)
     letter_list.remove(current_letter)
@@ -72,7 +69,7 @@ def set_new_letter():
 draw_apple(apple)
 draw_random()
 
-wn.onkeypress(move_apple, current_letter)  # Initial key binding
+wn.onkeypress(move_apple, current_letter)
 wn.listen()
 wn.mainloop()
 
