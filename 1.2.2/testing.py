@@ -16,6 +16,7 @@ apple.penup()
 letter_list = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l']
 letter_list_used = []
 current_letter = rand.choice(letter_list)
+randx = rand.randint(-20, 50)
 
 # --- Setting up the drawer --- #
 drawer = trtl.Turtle()
@@ -30,20 +31,20 @@ def draw_apple(active_apple):
     wn.update()
 
 def move_apple():
-    apple.goto(0, -150)
-    print("Apple moved to:", apple.ycor())
+    apple.goto(randx, -150)
+    print("Apple moved to:", apple.ycor(), apple.xcor())
     reset_apple()
 
 def draw_random():
     global current_letter
     drawer.clear()
-    drawer.color("Black")
+    drawer.color("black")
     drawer.goto(-100, 200)
     drawer.write(f"Press: {current_letter}", font=("Arial", 45, "bold"))
 
 def reset_apple():
     apple.hideturtle()
-    apple.goto(0, 0)
+    apple.goto(randx, 0)
     apple.showturtle()
     set_new_letter()
 
