@@ -8,67 +8,76 @@ apple_image = "apple.gif"
 wn.addshape(apple_image)
 wn.bgpic("background.gif")
 
-# --- Setting up the apple --- #
-apple = trtl.Turtle()
-apple.penup()
+# --- Initialize apples and letters --- #
+apples = []  # List to store the apples (turtles)
+letters = ['a', 's', 'd', 'f', 'g']  # Letters to display on apples
+apple_positions = [(-200, 200), (-100, 200), (0, 200), (100, 200), (200, 200)]  # Predefined positions for apples
 
-# --- Setting up letters --- #
-letter_list = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l']
-letter_list_used = []
-current_letter = rand.choice(letter_list)
-
-# --- Setting up the drawer --- #
-drawer = trtl.Turtle()
-drawer.hideturtle()
-drawer.penup()
+# --- Initialize drawers to display letters on apples --- #
+drawers = [trtl.Turtle() for _ in range(5)]
+for drawer in drawers:
+    drawer.hideturtle()
+    drawer.penup()
+    drawer.color("white")
 
 # --- Functions --- #
 
-def draw_apple(active_apple):
-    active_apple.shape(apple_image)
-    active_apple.showturtle()
-    wn.update()
+def draw_apples():
+    """
+    This function draws five apples on the screen at specific positions,
+    each apple having a unique letter displayed at its center.
+    """
+    for i in range(5):
+        apples.append(trtl.Turtle())
+        apples[i].penup()
+        apples[i].shape(apple_image)
+        apples[i].goto(apple_positions[i])
+        apples[i].showturtle()
 
-def move_apple():
-    apple.goto(apple.xcor(), -150)
-    print("Apple moved to:", apple.pos())
-    reset_apple()
+        # Display letter on the apple
+        drawers[i].goto(apple_positions[i][0] - 15, apple_positions[i][1] - 30)
+        drawers[i].write(letters[i], font=("Arial", 30, "bold"))
 
-def draw_random():
-    global current_letter
-    drawer.clear()
-    drawer.color("Black")
-    drawer.goto(-20, 200)
-    drawer.write(f"Press: {current_letter}", font=("Arial", 45, "bold"))
+def drop_apple(letter):
+    """
+    This function makes the apple corresponding to the typed letter drop
+    when the user presses the correct key.
+    """
+    if letter in letters:  # Check if the pressed letter is in the list of remaining letters
+        index = letters.index(letter)
+        apples[index].goto(apples[index].xcor(), -150)  # Move apple down
+        apples[index].hideturtle()  # Hide apple after it falls
+        drawers[index].clear()  # Clear the letter from the screen
 
-def reset_apple():
-    apple.hideturtle()
-    
-    # Randomize X position by multiples of 50
-    random_x = rand.randint(-7, 7) * 50  # Generates multiples of 50 between -350 and 350
-    apple.goto(random_x, 0)
-    
-    apple.showturtle()
-    set_new_letter()
+        # Remove the letter from the list of available letters
+        letters.remove(letter)
 
-def set_new_letter():
-    global current_letter
-    letter_list_used.append(current_letter)
-    letter_list.remove(current_letter)  # Correct removal by value
-    if letter_list:  # Check if there are letters left
-        current_letter = rand.choice(letter_list)
-        draw_random()
-        wn.onkeypress(move_apple, current_letter)
-    else:
-        drawer.clear()
-        drawer.write("Game Over", font=("Arial", 45, "bold"))
+        # Check if game is over (no more apples)
+        if not letters:
+            display_win_message()
 
-# --- Initial calls --- #
+def display_win_message():
+    """
+    This function displays the 'You Win!' message when all apples have fallen.
+    """
+    win_turtle = trtl.Turtle()
+    win_turtle.hideturtle()
+    win_turtle.penup()
+    win_turtle.color("black")
+    win_turtle.goto(0, 0)
+    win_turtle.write("You Win!", align="center", font=("Arial", 45, "bold"))
 
-draw_apple(apple)
-draw_random()
+def bind_keys():
+    """
+    This function binds the letter keys to the corresponding apple drop function.
+    """
+    for letter in letters:
+        wn.onkeypress(lambda l=letter: drop_apple(l), letter)  # Bind each letter to drop its corresponding apple
 
-wn.onkeypress(move_apple, current_letter)  # Initial key binding
+# --- Main Program Execution --- #
+draw_apples()  # Draw the apples on the screen
+bind_keys()  # Bind keys for user input
+
 wn.listen()
 wn.mainloop()
 
