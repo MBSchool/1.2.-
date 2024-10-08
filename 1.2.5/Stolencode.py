@@ -109,12 +109,7 @@ def down():
   runna.forward(width//2)
 
 
-draw_maze()
-#countdown()
-screen.onkeypress(right,"d")
-screen.onkeypress(up,"w")
-screen.onkeypress(down,"s")
-screen.onkeypress(left,"a")
+
 
 
 
