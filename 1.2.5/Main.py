@@ -6,6 +6,9 @@ import random as rand
 wn = trtl.Screen()
 wn.setup(width=1.0, height=1.0)
 
+# --- Setting up the main turtle --- #
+main = trtl.Turtle()
+main.penup()
 
 # --- Functions --- #
 
