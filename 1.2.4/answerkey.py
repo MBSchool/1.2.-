@@ -10,7 +10,7 @@ import turtle as trtl
 import random as rand
 
 # maze configuration variables
-num_sides = 15
+num_sides = 150
 path_width = 15 
 wall_color = "blue"
 
