@@ -1,6 +1,6 @@
 import turtle as trtl
 import random as rand
-
+import Stolencode as mazesetup
 # --- Setting up the screen --- #
 
 wn = trtl.Screen()
@@ -18,3 +18,10 @@ main.penup()
 
 
 # --- Events --- #
+
+mazesetup.draw_maze()
+#countdown()
+wn.onkeypress(mazesetup.right,"d")
+wn.onkeypress(mazesetup.up,"w")
+wn.onkeypress(mazesetup.down,"s")
+wn.onkeypress(mazesetup.left,"a")
