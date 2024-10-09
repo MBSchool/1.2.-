@@ -1,7 +1,6 @@
 import turtle as trtl
 import random as rand
 import Stolencode as mazesetup
-import time
 # --- Setting up the screen --- #
 
 wn = trtl.Screen()
@@ -12,7 +11,7 @@ main = trtl.Turtle()
 main.penup()
 main.hideturtle()
 
-
+# --- Start Button -- # 
 start_button = trtl.Turtle()
 start_button.showturtle()
 start_button.penup()
