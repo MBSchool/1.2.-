@@ -109,7 +109,24 @@ def down():
   runna.forward(width//2)
 
 
+follow = trtl("turtle")
+follow.speed("fastest")
+follow.color("red")
+follow.penup()
+follow.setposition(-250, -250)
 
+
+def follow_runner():
+    follow.setheading(follow.towards(horse))
+    follow.forward(1)
+    screen.ontimer(follow_runner, 10)
+
+
+
+
+
+
+follow_runner()
 
 
 
