@@ -2,13 +2,14 @@ import turtle as trtl
 import random as rand
 import mazesetup
 import testing as movement
-import asdasd as tazer
+import asdasd as tazer  # Assuming tazer functionality is in a module named tazer_module
 
 # --- Setting up the screen --- #
 wn = trtl.Screen()
 wn.setup(600, 600)
 wn.title("Maze Runner")
 wn.bgpic("image.png")
+
 # --- Setting up the main turtle --- #
 runna = trtl.Turtle()
 runna.penup()
@@ -21,30 +22,27 @@ follow.color("red")
 follow.penup()
 follow.setposition(-250, -250)
 
+# --- Setting up the Tazer turtle --- #
 tazer_trtl = trtl.Turtle()
 tazer_trtl.speed("slowest")
 tazer_trtl.color("blue")
 tazer_trtl.penup()
-tazer_trtl.setposition(runna.ycor, runna.xcor)
+tazer_trtl.setposition(runna.xcor(), runna.ycor())  # Corrected to use runna's coordinates
 
-# --- Variables -- #
+# --- Variables --- #
 CURSOR_SIZE = 20
 walls = mazesetup.walls  # Use walls from mazesetup
 
 # --- Functions --- #
-def follow_runner(RUNNER):
-    follow.setheading(follow.towards(RUNNER))
+def follow_runner():
+    follow.setheading(follow.towards(runna))
     follow.forward(1)
-    wn.ontimer(lambda: follow_runner(RUNNER), 10)
+    wn.ontimer(follow_runner, 10)
 
-def tazerfollow(RUNNER, TAZERTURTLE):
-    # Update the heading and position
-    TAZERTURTLE.setheading(TAZERTURTLE.towards(RUNNER))
-    TAZERTURTLE.goto(RUNNER.xcor(), RUNNER.ycor())
-    # Call this function again after a short delay
-    wn.ontimer(lambda: tazer(RUNNER, TAZERTURTLE), 100)
-
-
+def tazerfollow():
+    tazer_trtl.setheading(tazer_trtl.towards(runna))
+    tazer_trtl.goto(runna.xcor(), runna.ycor())
+    wn.ontimer(tazerfollow, 100)
 
 def collision(turtle):
     tx, ty = turtle.position()
@@ -58,12 +56,12 @@ def collision(turtle):
         _, stretch_len, _ = wall.shapesize()
         half_length = stretch_len * (CURSOR_SIZE + 1) / 2
 
-        if heading in [0, 180]:  # horizontal wall
+        if heading in [0, 180]:  # Horizontal wall
             if abs(ty - wy) < CURSOR_SIZE / 2 and abs(tx - wx) < half_length:
                 wall.color('red')
                 return True
 
-        elif heading in [90, 270]:  # vertical wall
+        elif heading in [90, 270]:  # Vertical wall
             if abs(tx - wx) < CURSOR_SIZE / 2 and abs(ty - wy) < half_length:
                 wall.color('red')
                 return True
@@ -76,12 +74,12 @@ wn.onkeypress(lambda: movement.look_right(runna), "d")
 wn.onkeypress(lambda: movement.look_left(runna), "a")
 
 mazesetup.level1()
-follow_runner(runna)
+follow_runner()
+tazerfollow()
 
-tazerfollow(runna, tazer_trtl)
+# Tazer activation on click
 wn.onclick(lambda x, y: tazer.move_tazer_and_clear(tazer_trtl, follow))
 
 wn.listen()
 wn.tracer(False)
 wn.mainloop()
- 
