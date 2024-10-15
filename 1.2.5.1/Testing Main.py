@@ -2,7 +2,7 @@ import turtle as trtl
 import random as rand
 import mazesetup
 import testing as movement
-import asdasd as tazer  # Assuming tazer functionality is in a module named tazer_module
+import TazerTesting as tazer  # Assuming tazer functionality is in a module named tazer_module
 
 # --- Setting up the screen --- #
 wn = trtl.Screen()
@@ -14,6 +14,8 @@ wn.bgpic("image.png")
 runna = trtl.Turtle()
 runna.penup()
 runna.color("red")
+runna.shapesize(19)
+
 
 # --- Setting up the Following turtle --- #
 follow = trtl.Turtle()
@@ -29,6 +31,14 @@ tazer_trtl.color("blue")
 tazer_trtl.penup()
 tazer_trtl.setposition(runna.xcor(), runna.ycor())  # Corrected to use runna's coordinates
 
+# --- Setting up the Target --- #
+
+target = trtl.Turtle()
+target.speed(10000000000000000000)
+target.color("red")
+target.shape("circle")
+target.penup()
+
 # --- Variables --- #
 CURSOR_SIZE = 20
 walls = mazesetup.walls  # Use walls from mazesetup
@@ -40,11 +50,10 @@ def follow_runner():
     wn.ontimer(follow_runner, 10)
 
 def tazerfollow():
-    tazer_trtl.setheading(tazer_trtl.towards(runna))
     tazer_trtl.goto(runna.xcor(), runna.ycor())
     wn.ontimer(tazerfollow, 100)
 
-def collision(turtle):
+'''def collision(turtle):
     tx, ty = turtle.position()
     for wall in walls:
         if wall.distance(turtle) < CURSOR_SIZE / 2:
@@ -67,18 +76,21 @@ def collision(turtle):
                 return True
 
     return False
-
+'''
 # --- Events --- #
 wn.onkeypress(lambda: movement.move(runna), "w")
 wn.onkeypress(lambda: movement.look_right(runna), "d")
 wn.onkeypress(lambda: movement.look_left(runna), "a")
 
-mazesetup.level1()
+# mazesetup.level1()
+
 follow_runner()
 tazerfollow()
-
+tazer.tazer_target(runna, target, tazer_trtl)
 # Tazer activation on click
-wn.onclick(lambda x, y: tazer.move_tazer_and_clear(tazer_trtl, follow))
+# wn.onclick(lambda x, y: tazer.move_tazer_and_clear(tazer_trtl, follow))
+
+wn.onclick(lambda x, y: tazer.move_tazer_and_clear(tazer_trtl, follow, runna, target))
 
 wn.listen()
 wn.tracer(False)
